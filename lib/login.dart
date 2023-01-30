@@ -125,7 +125,7 @@ class _loginState extends State<login> {
                         child: const Text("Go back")),
                   ),
                   ElevatedButton(onPressed: showbutton ? ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder:(context){return loginconfirm(name: _name.text, email: _email.text ,password: _password.text);})) : null,
-                      child: const Text("Sign Up"))
+                      child: const Text("Sign Up !"))
 
                 ],
               ),
