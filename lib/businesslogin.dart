@@ -17,7 +17,7 @@ class _businessloginState extends State<businesslogin> {
 
   RegExp pass_valid2 = RegExp(r"(?=.*[a-z])");
   RegExp pass_valid3 = RegExp(r"(?=.*\d)");
-  RegExp pass_valid4 = RegExp(r"(?=.*[A-Z]");
+  RegExp pass_valid4 = RegExp(r"(?=.*[A-Z])");
 
 
   RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
