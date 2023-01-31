@@ -10,6 +10,21 @@ class loginconfirm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items:const [
+          BottomNavigationBarItem(
+            label: "Home",
+            icon: Icon(Icons.home),backgroundColor: Colors.black),
+          BottomNavigationBarItem(
+            label: "Fav",
+            icon: Icon(Icons.favorite),backgroundColor: Colors.black),
+          BottomNavigationBarItem(
+            label: "Search",
+            icon: Icon(Icons.search),backgroundColor: Colors.black),
+          BottomNavigationBarItem(
+            label: "Profile",
+            icon: Icon(Icons.person),backgroundColor: Colors.black),
+      ]),
       body: SizedBox(
         child: Center(
           child: Column(children: [
