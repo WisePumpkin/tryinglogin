@@ -15,19 +15,36 @@ class intro extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Personal",style: TextStyle(fontSize: 20)),
-                IconButton(
+                const Padding(
+                  padding: EdgeInsets.all(25.0),
+                  child: Text("Personal",style: TextStyle(fontSize: 20)),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 3),
+                  ),
+                  child: IconButton(
 
-                    onPressed:
-                        ()=>Navigator.push(context, MaterialPageRoute(builder:(context) {return const login();})),
-                    iconSize: 80,
-                    icon: const Icon(Icons.person_outline)),
+                      onPressed:
+                          ()=>Navigator.push(context, MaterialPageRoute(builder:(context) {return const login();})),
+                      iconSize: 80,
+                      icon: const Icon(Icons.person_outline)),
+                ),
                 const SizedBox(height: 100),
-                const Text("Business",style: TextStyle(fontSize: 20)),
-                IconButton(
-                    onPressed:
-                        ()=>Navigator.push(context, MaterialPageRoute(builder:(context) {return const businesslogin();})),
-                    icon: Icon(Icons.business_center_outlined),iconSize: 80,)
+                const Padding(
+                  padding: EdgeInsets.all(25.0),
+                  child: Text("Business",style: TextStyle(fontSize: 20)),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 3),
+                  ),
+                  child: IconButton(
+
+                      onPressed:
+                          ()=>Navigator.push(context, MaterialPageRoute(builder:(context) {return const businesslogin();})),
+                      icon: Icon(Icons.business_center_outlined),iconSize: 80,),
+                )
                 
               ],
             ),

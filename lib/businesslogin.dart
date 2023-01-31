@@ -13,6 +13,13 @@ class businesslogin extends StatefulWidget {
 class _businessloginState extends State<businesslogin> {
   final _formkeybusiness = GlobalKey<FormState>();
   double password_strength=0;
+  RegExp pass_valid1 = RegExp(r"(?=.*\W)");
+
+  RegExp pass_valid2 = RegExp(r"(?=.*[a-z])");
+  RegExp pass_valid3 = RegExp(r"(?=.*\d)");
+  RegExp pass_valid4 = RegExp(r"(?=.*[A-Z]");
+
+
   RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
   RegExp email_valid = RegExp(
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
@@ -143,7 +150,8 @@ class _businessloginState extends State<businesslogin> {
   }
   bool validatePassword(String pass) {
     String a = pass.trim();
-    if(pass_valid.hasMatch(a)){return true;}
+    if(pass_valid.hasMatch(a)){
+      return true;}
     else{return false;}
 
   }
