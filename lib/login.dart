@@ -20,7 +20,11 @@ class _loginState extends State<login> {
   TextEditingController _name = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
-  TextEditingController _passwordconfirm = TextEditingController();
+  bool enablelogin = false;
+  bool loginname=false;
+  bool loginemail=false;
+  bool loginpassword=false;
+  int requirements=0;
   bool showbutton = false;
   bool _obscured =true;
 
@@ -44,18 +48,21 @@ class _loginState extends State<login> {
                         onChanged: (_name){_formkey.currentState!.validate();},
                         validator: (_name){
                           if(_name!.isEmpty){
-                            //setState(() {showbutton=false;});
+                            setState(() {loginname=false;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
                             return "Please Enter a Valid name";}
-                          },
+                          else{
+                            setState(() {loginname=true;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
+                          }
+                        },
                         controller: _name,
-                      decoration:const InputDecoration(
-                        prefixIcon: Icon(Icons.person_outlined),
-                        contentPadding: EdgeInsets.all(15),
-                        hintText: "Enter your name here",
-                        labelText: "Name",
-                        border: OutlineInputBorder(),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                    )
+                        decoration:const InputDecoration(
+                          prefixIcon: Icon(Icons.person_outlined),
+                          contentPadding: EdgeInsets.all(15),
+                          hintText: "Enter your name here",
+                          labelText: "Name",
+                          border: OutlineInputBorder(),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                        )
                     ),
                   ),
                   Padding(
@@ -65,15 +72,16 @@ class _loginState extends State<login> {
                       onChanged: (_email){_formkey.currentState!.validate();},
                         validator: (_email){
                           if(_email!.isEmpty){
-                            //setState(() {showbutton=false;});
+                            setState(() {loginemail=false;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
                             return "Please Enter a Valid Email";}
                           else{
                             bool result = validateEmail(_email);
                             if(result){
-                              //setState(() {showbutton=true;});
+                              setState(() {loginemail=true;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
                             }
                             else{
                               //setState(() {showbutton=false;});
+                              setState(() {loginemail=false;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
                               return "Not valid";}
                           }
                         },
@@ -95,13 +103,13 @@ class _loginState extends State<login> {
                       onChanged: (_password){_formkey.currentState!.validate();},
                       validator: (_password){
                         if(_password!.isEmpty){
-                          setState(() {showbutton=false;});
+                          setState(() {loginpassword=false;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
                           return "Please Enter A password";}
                         else{
                           bool result = validatePassword(_password);
-                          if(result){setState(() {showbutton=true;});}
+                          if(result){setState(() {loginpassword=true;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});}
                           else{
-                            setState(() {showbutton=false;});
+                            setState(() {loginpassword=false;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
                             return "Not strong enough";}
                         }
                       },
@@ -119,12 +127,10 @@ class _loginState extends State<login> {
                       )
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(onPressed:()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){return const intro();})),
-                        child: const Text("Go back")),
-                  ),
-                  ElevatedButton(onPressed: showbutton ? ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder:(context){return loginconfirm(name: _name.text, email: _email.text ,password: _password.text);})) : null,
+
+                  ElevatedButton(onPressed:()=> {if(enablelogin){Navigator.pushReplacement(context, MaterialPageRoute(builder:(context){
+                    return loginconfirm(name: _name.text, email: _email.text ,password: _password.text);}))}},
+
                       child: const Text("Sign Up !"))
 
                 ],
@@ -141,6 +147,9 @@ class _loginState extends State<login> {
     if(pass_valid.hasMatch(a)){return true;}
     else{return false;}
 
+  }
+  bool EnableLogin(loginname,loginemail,loginpassword){
+    if(loginname){if(loginemail){if(loginpassword){return true;}else{return false;}}else{return false;}}else{return false;}
   }
 
   bool validateEmail(String pass) {
