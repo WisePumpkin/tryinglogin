@@ -3,16 +3,23 @@ import 'package:flutter/material.dart';
 import 'intro.dart';
 import 'loginconfirm.dart';
 
-class login extends StatefulWidget {
-  const login({Key? key}) : super(key: key);
+class businesslogin extends StatefulWidget {
+  const businesslogin({Key? key}) : super(key: key);
 
   @override
-  State<login> createState() => _loginState();
+  State<businesslogin> createState() => _businessloginState();
 }
 
-class _loginState extends State<login> {
-  final _formkey = GlobalKey<FormState>();
+class _businessloginState extends State<businesslogin> {
+  final _formkeybusiness = GlobalKey<FormState>();
   double password_strength=0;
+  RegExp pass_valid1 = RegExp(r"(?=.*\W)");
+
+  RegExp pass_valid2 = RegExp(r"(?=.*[a-z])");
+  RegExp pass_valid3 = RegExp(r"(?=.*\d)");
+  RegExp pass_valid4 = RegExp(r"(?=.*[A-Z])");
+
+
   RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
   RegExp email_valid = RegExp(
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
@@ -20,21 +27,20 @@ class _loginState extends State<login> {
   TextEditingController _name = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+  bool showbutton = false;
   bool enablelogin = false;
   bool loginname=false;
   bool loginemail=false;
   bool loginpassword=false;
   int requirements=0;
-  bool showbutton = false;
   bool _obscured =true;
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body:SafeArea(
         child: Form(
-          key: _formkey,
+          key: _formkeybusiness,
           child: Center(
             child: Container(
               margin: const EdgeInsets.all(20),
@@ -45,7 +51,7 @@ class _loginState extends State<login> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                        onChanged: (_name){_formkey.currentState!.validate();},
+                        onChanged: (_name){_formkeybusiness.currentState!.validate();},
                         validator: (_name){
                           if(_name!.isEmpty){
                             setState(() {loginname=false;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
@@ -68,8 +74,8 @@ class _loginState extends State<login> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: _email,
-                      onChanged: (_email){_formkey.currentState!.validate();},
+                        controller: _email,
+                        onChanged: (_email){_formkeybusiness.currentState!.validate();},
                         validator: (_email){
                           if(_email!.isEmpty){
                             setState(() {loginemail=false;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
@@ -85,53 +91,54 @@ class _loginState extends State<login> {
                               return "Not valid";}
                           }
                         },
-                      decoration:const InputDecoration(
-                        prefixIcon: Icon(Icons.email_outlined),
-                        contentPadding: EdgeInsets.all(15),
-                        hintText: "Enter your email here",
-                        labelText: "Email",
-                        border: OutlineInputBorder(),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                    )
+                        decoration:const InputDecoration(
+                          prefixIcon: Icon(Icons.email_outlined),
+                          contentPadding: EdgeInsets.all(15),
+                          hintText: "Enter your email here",
+                          labelText: "Email",
+                          border: OutlineInputBorder(),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                        )
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      obscureText:_obscured,
-                      controller:_password,
-                      onChanged: (_password){_formkey.currentState!.validate();},
-                      validator: (_password){
-                        if(_password!.isEmpty){
-                          setState(() {loginpassword=false;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
-                          return "Please Enter A password";}
-                        else{
-                          bool result = validatePassword(_password);
-                          if(result){setState(() {loginpassword=true;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});}
-                          else{
+                        obscureText:_obscured,
+                        controller:_password,
+                        onChanged: (_password){_formkeybusiness.currentState!.validate();},
+                        validator: (_password){
+                          if(_password!.isEmpty){
                             setState(() {loginpassword=false;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
-                            return "Not strong enough";}
-                        }
-                      },
+                            return "Please Enter A password";}
+                          else{
+                            bool result = validatePassword(_password);
+                            if(result){setState(() {loginpassword=true;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});}
+                            else{
+                              setState(() {loginpassword=false;enablelogin=EnableLogin(loginname,loginemail,loginpassword);});
+                              return "Not strong enough";}
+                          }
+                        },
                         decoration:InputDecoration(
-                          prefixIcon: const Icon(Icons.lock_outlined),
-                          contentPadding: const EdgeInsets.all(15),
-                          hintText: "Enter your password here",
-                          labelText: "Password",
-                          border: const OutlineInputBorder(),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          suffixIcon: IconButton(
-                            onPressed :(){
-                              setState(()=> _obscured= !_obscured);},
-                            icon: _obscured ? Icon(Icons.vpn_key_off_outlined) : Icon(Icons.vpn_key_outlined),)
-                      )
+                            prefixIcon: const Icon(Icons.lock_outlined),
+                            contentPadding: const EdgeInsets.all(15),
+                            hintText: "Enter your password here",
+                            labelText: "Password",
+                            border: const OutlineInputBorder(),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            suffixIcon: IconButton(
+                              onPressed :(){
+                                setState(()=> _obscured= !_obscured);},
+                              icon: _obscured ? Icon(Icons.vpn_key_off_outlined) : Icon(Icons.vpn_key_outlined),)
+                        )
                     ),
                   ),
-
                   ElevatedButton(onPressed:()=> {if(enablelogin){Navigator.pushReplacement(context, MaterialPageRoute(builder:(context){
                     return loginconfirm(name: _name.text, email: _email.text ,password: _password.text);}))}},
 
-                      child: const Text("Sign Up !"))
+                        child: const Text("Sign Up !"))
+
+
 
                 ],
               ),
@@ -141,10 +148,10 @@ class _loginState extends State<login> {
       ),
     );
   }
-
   bool validatePassword(String pass) {
     String a = pass.trim();
-    if(pass_valid.hasMatch(a)){return true;}
+    if(pass_valid.hasMatch(a)){
+      return true;}
     else{return false;}
 
   }
